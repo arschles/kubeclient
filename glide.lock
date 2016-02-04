@@ -22,7 +22,7 @@ imports:
   - /spew
   - spew
 - name: github.com/docker/docker
-  version: 61464701fabb6b013506ad555daaab84723663b4
+  version: 2b27fe17a1b3fb8472fde96d768fa70996adf201
   subpackages:
   - /pkg/parsers
   - pkg/parsers
