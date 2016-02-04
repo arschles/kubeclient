@@ -35,7 +35,6 @@ import (
 	"github.com/jchauncey/kubeclient/api/unversioned"
 	"github.com/jchauncey/kubeclient/api/v1"
 	"github.com/jchauncey/kubeclient/api/validation"
-	"github.com/jchauncey/kubeclient/client/metrics"
 	"github.com/jchauncey/kubeclient/fields"
 	"github.com/jchauncey/kubeclient/labels"
 	"github.com/jchauncey/kubeclient/runtime"
@@ -50,7 +49,6 @@ import (
 var specialParams = sets.NewString("timeout")
 
 func init() {
-	metrics.Register()
 }
 
 // HTTPClient is an interface for testing a request object.
@@ -625,7 +623,6 @@ func (r *Request) Watch() (watch.Interface, error) {
 	}
 	time.Sleep(r.backoffMgr.CalculateBackoff(r.URL()))
 	resp, err := client.Do(req)
-	updateURLMetrics(r, resp, err)
 	if r.baseURL != nil {
 		if err != nil {
 			r.backoffMgr.UpdateBackoff(r.baseURL, err, 0)
@@ -650,23 +647,6 @@ func (r *Request) Watch() (watch.Interface, error) {
 	return watch.NewStreamWatcher(watchjson.NewDecoder(resp.Body, r.content.Codec)), nil
 }
 
-// updateURLMetrics is a convenience function for pushing metrics.
-// It also handles corner cases for incomplete/invalid request data.
-func updateURLMetrics(req *Request, resp *http.Response, err error) {
-	url := "none"
-	if req.baseURL != nil {
-		url = req.baseURL.Host
-	}
-
-	// If we have an error (i.e. apiserver down) we report that as a metric label.
-	if err != nil {
-		metrics.RequestResult.WithLabelValues(err.Error(), req.verb, url).Inc()
-	} else {
-		//Metrics for failure codes
-		metrics.RequestResult.WithLabelValues(strconv.Itoa(resp.StatusCode), req.verb, url).Inc()
-	}
-}
-
 // Stream formats and executes the request, and offers streaming of the response.
 // Returns io.ReadCloser which could be used for streaming of the response, or an error
 // Any non-2xx http status code causes an error.  If we get a non-2xx code, we try to convert the body into an APIStatus object.
@@ -686,7 +666,6 @@ func (r *Request) Stream() (io.ReadCloser, error) {
 	}
 	time.Sleep(r.backoffMgr.CalculateBackoff(r.URL()))
 	resp, err := client.Do(req)
-	updateURLMetrics(r, resp, err)
 	if r.baseURL != nil {
 		if err != nil {
 			r.backoffMgr.UpdateBackoff(r.URL(), err, 0)
@@ -730,11 +709,7 @@ func (r *Request) Stream() (io.ReadCloser, error) {
 // fn at most once. It will return an error if a problem occurred prior to connecting to the
 // server - the provided function is responsible for handling server errors.
 func (r *Request) request(fn func(*http.Request, *http.Response)) error {
-	//Metrics for total request latency
 	start := time.Now()
-	defer func() {
-		metrics.RequestLatency.WithLabelValues(r.verb, r.finalURLTemplate()).Observe(metrics.SinceInMicroseconds(start))
-	}()
 
 	if r.err != nil {
 		glog.V(4).Infof("Error in request: %v", r.err)
@@ -768,7 +743,6 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 
 		time.Sleep(r.backoffMgr.CalculateBackoff(r.URL()))
 		resp, err := client.Do(req)
-		updateURLMetrics(r, resp, err)
 		if err != nil {
 			r.backoffMgr.UpdateBackoff(r.URL(), err, 0)
 		} else {
