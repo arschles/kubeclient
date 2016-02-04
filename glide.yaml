@@ -1,0 +1,41 @@
+package: github.com/jchauncey/kubeclient
+import:
+- package: github.com/blang/semver
+- package: github.com/coreos/go-semver
+  subpackages:
+  - /semver
+- package: github.com/davecgh/go-spew
+  subpackages:
+  - /spew
+- package: github.com/docker/docker
+  subpackages:
+  - /pkg/parsers
+- package: github.com/docker/spdystream
+- package: github.com/emicklei/go-restful
+  subpackages:
+  - /swagger
+- package: github.com/fsouza/go-dockerclient
+- package: github.com/ghodss/yaml
+- package: github.com/godbus/dbus
+- package: github.com/golang/glog
+- package: github.com/golang/groupcache
+  subpackages:
+  - /lru
+- package: github.com/google/cadvisor
+  subpackages:
+  - /info/v1
+- package: github.com/google/gofuzz
+- package: github.com/imdario/mergo
+- package: github.com/juju/ratelimit
+- package: github.com/pborman/uuid
+- package: github.com/prometheus/client_golang
+  subpackages:
+  - /prometheus
+- package: github.com/spf13/pflag
+- package: github.com/ugorji/go
+  subpackages:
+  - /codec
+- package: golang.org/x/net
+  subpackages:
+  - /context
+- package: speter.net/go/exp/math/dec/inf
