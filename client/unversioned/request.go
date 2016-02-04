@@ -709,8 +709,6 @@ func (r *Request) Stream() (io.ReadCloser, error) {
 // fn at most once. It will return an error if a problem occurred prior to connecting to the
 // server - the provided function is responsible for handling server errors.
 func (r *Request) request(fn func(*http.Request, *http.Response)) error {
-	start := time.Now()
-
 	if r.err != nil {
 		glog.V(4).Infof("Error in request: %v", r.err)
 		return r.err
