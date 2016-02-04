@@ -11,9 +11,6 @@ import:
 - package: github.com/ghodss/yaml
 - package: github.com/godbus/dbus
 - package: github.com/golang/glog
-- package: github.com/google/cadvisor
-  subpackages:
-  - /info/v1
 - package: github.com/google/gofuzz
 - package: github.com/imdario/mergo
 - package: github.com/juju/ratelimit
