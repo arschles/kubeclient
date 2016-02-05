@@ -13,7 +13,6 @@ import:
 - package: github.com/godbus/dbus
 - package: github.com/golang/glog
 - package: github.com/google/gofuzz
-- package: github.com/imdario/mergo
 - package: github.com/juju/ratelimit
 - package: github.com/pborman/uuid
 - package: github.com/spf13/pflag
