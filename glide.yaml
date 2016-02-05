@@ -9,7 +9,6 @@ import:
 - package: github.com/emicklei/go-restful
   subpackages:
   - /swagger
-- package: github.com/fsouza/go-dockerclient
 - package: github.com/ghodss/yaml
 - package: github.com/godbus/dbus
 - package: github.com/golang/glog
