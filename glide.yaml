@@ -6,7 +6,6 @@ import:
 - package: github.com/davecgh/go-spew
   subpackages:
   - /spew
-- package: github.com/docker/spdystream
 - package: github.com/emicklei/go-restful
   subpackages:
   - /swagger
