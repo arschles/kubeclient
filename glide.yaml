@@ -1,8 +1,5 @@
 package: github.com/jchauncey/kubeclient
 import:
-- package: github.com/coreos/go-semver
-  subpackages:
-  - /semver
 - package: github.com/davecgh/go-spew
   subpackages:
   - /spew

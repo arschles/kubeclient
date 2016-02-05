@@ -1,11 +1,6 @@
-hash: 51856d41467bd984d4cc80450854866aabefeff8ca61197ae514e9acbb50ec05
-updated: 2016-02-05T12:33:19.9055697-07:00
+hash: 8ee7c4bc07afc3f97621252eaf576ea6534187c9c366596aeacc5eea687bd259
+updated: 2016-02-05T12:42:53.179436185-07:00
 imports:
-- name: github.com/coreos/go-semver
-  version: d043ae190b3202550d026daf009359bb5d761672
-  subpackages:
-  - /semver
-  - semver
 - name: github.com/davecgh/go-spew
   version: 5215b55f46b2b919f50a1df0eaa5886afe4e3b3d
   subpackages:
